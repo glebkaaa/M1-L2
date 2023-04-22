@@ -1,27 +1,38 @@
-import random
-import time
-mod = int(input(
-          'Выберите режим работы генерации пароля(1 - упрощенный; 2 - сложный): '))
+import discord
+from discord.ext import commands
+from random import choice
+from credits import bot_token
 
-if mod == 1:
-    password_length = int(input('Введите длину пароля: '))
-    possible_symbols = '+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    password_simple = ''
-    for i in range(password_length):
-        password_simple += str(random.choice(possible_symbols))
-    print('Ваш пароль: ' + password_simple)
-    file_name = input('Введите название файла, который будет хранить пароль: ')
-    with open(file_name + '.txt', 'w') as f:
-        f.write(password_simple)
-elif mod == 2:
-    possible_symbols = '+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    password_hard = ''
-    for i in range(random.randint(2, 4)):
-        password_hard += str(random.choice(possible_symbols)
-                             ) + str(time.time())
-    print('Ваш пароль: ' + password_hard)
-    file_name = input('Введите название файла, который будет хранить пароль: ')
-    with open(file_name + '.txt', 'w') as f:
-        f.write(password_hard)
-else:
-    print('Введите правильное число!')
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Привет! Я бот {bot.user}!')
+
+
+@bot.command()
+async def heh(ctx, count_heh=5):
+    await ctx.send('he' * count_heh)
+
+# мой код доработки
+
+
+@bot.command()
+async def add(ctx, left: int, right: int):
+    await ctx.send(left + right)
+
+
+@bot.command()
+async def choose(ctx, choices: str):
+    await ctx.send(choice(choices))
+
+
+@bot.command()
+async def cool(ctx):
+    possible = ['cool', 'bad']
+    await ctx.send(f'The bot is {choice(possible)}')
+
+bot.run(bot_token)
