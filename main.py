@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from random import choice
+from math import hypot, pow
+from credits import bot_token
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -13,14 +15,26 @@ async def hello(ctx):
 
 
 @bot.command()
-async def heh(ctx, count_heh=5):
-    await ctx.send('he' * count_heh)
-
-# мой код доработки
+async def show(ctx):  # использую такое название, потому что help занято
+    await ctx.send('Привет, вот что я умею: ' + '\n' + '$hello - приветствие' + '\n' + '$show - возможности бота' + '\n' + '$degree - возведение произвольного числа в степень' + '\n' + '$hypot - возвращает евклидова число' + '\n' + '$plus - складывает 2 числа' + '\n' + '$choose - возвращает случайную букву из слова или предложения' + '\n' + '$cool - случайная реакция бота')
 
 
 @bot.command()
-async def add(ctx, left: int, right: int):
+async def degree(ctx, number: int, count: int):
+    if count >= 0:
+        await ctx.send(int(pow(number, count)))
+    elif count < 0:
+        await ctx.send('Пока, я не научился такому :(' + '\n' + f'Пример, {number} в кубе:') # Команда pow хорошо с этим справляется. Сделано исключительно для разнообразия.
+        await ctx.send(int(pow(number, 3)))
+
+
+@bot.command()
+async def hypot(ctx, number: int, number2: int):
+    await ctx.send(hypot(number, number2))
+
+
+@bot.command()
+async def plus(ctx, left: int, right: int):
     await ctx.send(left + right)
 
 
@@ -31,7 +45,8 @@ async def choose(ctx, choices: str):
 
 @bot.command()
 async def cool(ctx):
-    possible = ['cool', 'bad']
+    possible = ['cool', 'bad', 'awesome', 'incredible', 'awful', 'so-so']
     await ctx.send(f'The bot is {choice(possible)}')
 
-bot.run('token')
+
+bot.run(bot_token)
