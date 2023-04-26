@@ -24,7 +24,8 @@ async def degree(ctx, number: int, count: int):
     if count >= 0:
         await ctx.send(int(pow(number, count)))
     elif count < 0:
-        await ctx.send('Пока, я не научился такому :(' + '\n' + f'Пример, {number} в кубе:') # Команда pow хорошо с этим справляется. Сделано исключительно для разнообразия.
+        await ctx.send('Пока, я не научился такому :(' + '\n' + f'Пример, {number} в кубе:') # Команда pow хорошо с
+        # этим справляется. Сделано исключительно для разнообразия.
         await ctx.send(int(pow(number, 3)))
 
 
